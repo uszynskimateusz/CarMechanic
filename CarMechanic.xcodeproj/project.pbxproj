@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		69119BA8253B128700AB758C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69119BA7253B128700AB758C /* AppDelegate.swift */; };
 		69119BAA253B128700AB758C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69119BA9253B128700AB758C /* SceneDelegate.swift */; };
-		69119BAC253B128700AB758C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69119BAB253B128700AB758C /* ViewController.swift */; };
+		69119BAC253B128700AB758C /* PartsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69119BAB253B128700AB758C /* PartsListViewController.swift */; };
 		69119BAF253B128700AB758C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 69119BAD253B128700AB758C /* Main.storyboard */; };
 		69119BB1253B128A00AB758C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 69119BB0253B128A00AB758C /* Assets.xcassets */; };
 		69119BB4253B128A00AB758C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 69119BB2253B128A00AB758C /* LaunchScreen.storyboard */; };
@@ -38,7 +38,7 @@
 		69119BA4253B128700AB758C /* CarMechanic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CarMechanic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		69119BA7253B128700AB758C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		69119BA9253B128700AB758C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		69119BAB253B128700AB758C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		69119BAB253B128700AB758C /* PartsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartsListViewController.swift; sourceTree = "<group>"; };
 		69119BAE253B128700AB758C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		69119BB0253B128A00AB758C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		69119BB3253B128A00AB758C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -101,8 +101,9 @@
 			children = (
 				69119BA7253B128700AB758C /* AppDelegate.swift */,
 				69119BA9253B128700AB758C /* SceneDelegate.swift */,
-				69119BAB253B128700AB758C /* ViewController.swift */,
-				69119BAD253B128700AB758C /* Main.storyboard */,
+				69119BDF253B454500AB758C /* Models */,
+				69119BDA253B453100AB758C /* Views */,
+				69119BDB253B453700AB758C /* Controlles */,
 				69119BB0253B128A00AB758C /* Assets.xcassets */,
 				69119BB2253B128A00AB758C /* LaunchScreen.storyboard */,
 				69119BB5253B128A00AB758C /* Info.plist */,
@@ -126,6 +127,29 @@
 				69119BCB253B128A00AB758C /* Info.plist */,
 			);
 			path = CarMechanicUITests;
+			sourceTree = "<group>";
+		};
+		69119BDA253B453100AB758C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				69119BAD253B128700AB758C /* Main.storyboard */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		69119BDB253B453700AB758C /* Controlles */ = {
+			isa = PBXGroup;
+			children = (
+				69119BAB253B128700AB758C /* PartsListViewController.swift */,
+			);
+			path = Controlles;
+			sourceTree = "<group>";
+		};
+		69119BDF253B454500AB758C /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -258,7 +282,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				69119BAC253B128700AB758C /* ViewController.swift in Sources */,
+				69119BAC253B128700AB758C /* PartsListViewController.swift in Sources */,
 				69119BA8253B128700AB758C /* AppDelegate.swift in Sources */,
 				69119BAA253B128700AB758C /* SceneDelegate.swift in Sources */,
 			);
