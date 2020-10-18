@@ -9,7 +9,7 @@ import UIKit
 
 class PartsListViewController: UITableViewController {
 
-    let itemList = ["transmision", "clutch", "brakes"]
+    var itemList = ["transmision", "clutch", "brakes"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,9 +39,32 @@ class PartsListViewController: UITableViewController {
             tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
         }
         
-        
-        
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    //MARK: NavigationBar Methods
+    @IBAction func addButtonPressed(_ sender: Any) {
+        
+        var textField = UITextField()
+        
+        let alert = UIAlertController(title: "Add new part", message: "", preferredStyle: .alert)
+        
+        let action = UIAlertAction(title: "Add part", style: .default) { (action) in
+            self.itemList.append(textField.text!)
+            
+            self.tableView.reloadData()
+        }
+        
+        alert.addTextField { (alertTextField) in
+            alertTextField.placeholder = "Add new part"
+            
+            textField = alertTextField
+        }
+        
+        alert.addAction(action)
+        
+        present(alert, animated: true, completion: nil)
+        
     }
 }
 

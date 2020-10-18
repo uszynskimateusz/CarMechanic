@@ -30,7 +30,14 @@
                             <outlet property="delegate" destination="l3s-lD-PgF" id="O3S-4H-oNw"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Car Mechanic 🚗" id="4Df-Ed-Vjc"/>
+                    <navigationItem key="navigationItem" title="Car Mechanic 🚗" id="4Df-Ed-Vjc">
+                        <barButtonItem key="rightBarButtonItem" image="plus" catalog="system" id="mDU-a5-pMv">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="addButtonPressed:" destination="l3s-lD-PgF" id="Rm8-4a-0mL"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="shL-xD-ezN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -60,6 +67,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="plus" catalog="system" width="128" height="113"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
