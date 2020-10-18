@@ -15,6 +15,7 @@
 		69119BB4253B128A00AB758C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 69119BB2253B128A00AB758C /* LaunchScreen.storyboard */; };
 		69119BBF253B128A00AB758C /* CarMechanicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69119BBE253B128A00AB758C /* CarMechanicTests.swift */; };
 		69119BCA253B128A00AB758C /* CarMechanicUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69119BC9253B128A00AB758C /* CarMechanicUITests.swift */; };
+		699990A9253CA3070069D793 /* Part.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699990A8253CA3070069D793 /* Part.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		69119BC5253B128A00AB758C /* CarMechanicUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CarMechanicUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		69119BC9253B128A00AB758C /* CarMechanicUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarMechanicUITests.swift; sourceTree = "<group>"; };
 		69119BCB253B128A00AB758C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		699990A8253CA3070069D793 /* Part.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Part.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +150,7 @@
 		69119BDF253B454500AB758C /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				699990A8253CA3070069D793 /* Part.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -282,6 +285,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				699990A9253CA3070069D793 /* Part.swift in Sources */,
 				69119BAC253B128700AB758C /* PartsListViewController.swift in Sources */,
 				69119BA8253B128700AB758C /* AppDelegate.swift in Sources */,
 				69119BAA253B128700AB758C /* SceneDelegate.swift in Sources */,

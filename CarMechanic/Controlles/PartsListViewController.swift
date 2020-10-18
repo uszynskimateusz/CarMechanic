@@ -9,11 +9,26 @@ import UIKit
 
 class PartsListViewController: UITableViewController {
 
-    var itemList = ["transmision", "clutch", "brakes"]
+    var itemList = [Part]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        let newPart = Part()
+        newPart.name = "seel"
+        itemList.append(newPart)
+        
+        let newPart2 = Part()
+        newPart2.name = "seel2"
+        newPart2.done = true
+        itemList.append(newPart2)
+        
+        let newPart3 = Part()
+        newPart3.name = "seel3"
+        itemList.append(newPart3)
+        
+        
     }
     
     //MARK: TableView Datasource Methods
@@ -25,7 +40,11 @@ class PartsListViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PartItemCell", for: indexPath)
         
-        cell.textLabel?.text = itemList[indexPath.row]
+        let item = itemList[indexPath.row]
+        
+        cell.textLabel?.text = item.name
+        
+        cell.accessoryType = item.done ? .checkmark : .none
         
         return cell
     }
@@ -33,12 +52,10 @@ class PartsListViewController: UITableViewController {
     //MARK: TableView Delegate Methods
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if tableView.cellForRow(at: indexPath)?.accessoryType == .checkmark {
-            tableView.cellForRow(at: indexPath)?.accessoryType = .none
-        } else {
-            tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-        }
+        let item = itemList[indexPath.row]
+        item.done = !item.done
         
+        tableView.reloadData()
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
@@ -50,7 +67,11 @@ class PartsListViewController: UITableViewController {
         let alert = UIAlertController(title: "Add new part", message: "", preferredStyle: .alert)
         
         let action = UIAlertAction(title: "Add part", style: .default) { (action) in
-            self.itemList.append(textField.text!)
+            
+            let newPart = Part()
+            newPart.name = textField.text!
+            
+            self.itemList.append(newPart)
             
             self.tableView.reloadData()
         }
