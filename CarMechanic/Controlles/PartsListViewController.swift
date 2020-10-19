@@ -6,29 +6,20 @@
 //
 
 import UIKit
+import CoreData
 
 class PartsListViewController: UITableViewController {
 
     var itemList = [Part]()
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        let newPart = Part()
-        newPart.name = "seel"
-        itemList.append(newPart)
+        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
         
-        let newPart2 = Part()
-        newPart2.name = "seel2"
-        newPart2.done = true
-        itemList.append(newPart2)
-        
-        let newPart3 = Part()
-        newPart3.name = "seel3"
-        itemList.append(newPart3)
-        
-        
+        loadParts()
     }
     
     //MARK: TableView Datasource Methods
@@ -43,7 +34,6 @@ class PartsListViewController: UITableViewController {
         let item = itemList[indexPath.row]
         
         cell.textLabel?.text = item.name
-        
         cell.accessoryType = item.done ? .checkmark : .none
         
         return cell
@@ -67,13 +57,13 @@ class PartsListViewController: UITableViewController {
         let alert = UIAlertController(title: "Add new part", message: "", preferredStyle: .alert)
         
         let action = UIAlertAction(title: "Add part", style: .default) { (action) in
-            
-            let newPart = Part()
+
+            let newPart = Part(context: self.context)
             newPart.name = textField.text!
             
             self.itemList.append(newPart)
             
-            self.tableView.reloadData()
+            self.saveParts()
         }
         
         alert.addTextField { (alertTextField) in
@@ -86,6 +76,25 @@ class PartsListViewController: UITableViewController {
         
         present(alert, animated: true, completion: nil)
         
+    }
+    
+    func saveParts() {
+        do {
+            try context.save()
+        } catch {
+            print("error context.save() \(error.localizedDescription)")
+        }
+        
+        self.tableView.reloadData()
+    }
+    
+    func loadParts() {
+        let request : NSFetchRequest<Part> = Part.fetchRequest()
+        do {
+            itemList =  try context.fetch(request)
+        } catch {
+            print("context fetch request error \(error.localizedDescription)")
+        }
     }
 }
 
