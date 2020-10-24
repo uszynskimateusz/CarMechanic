@@ -17,8 +17,6 @@ class PartsListViewController: UITableViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
-        
         loadParts()
     }
     
@@ -44,8 +42,8 @@ class PartsListViewController: UITableViewController {
         
         let item = itemList[indexPath.row]
         item.done = !item.done
+        saveParts()
         
-        tableView.reloadData()
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
@@ -88,13 +86,36 @@ class PartsListViewController: UITableViewController {
         self.tableView.reloadData()
     }
     
-    func loadParts() {
-        let request : NSFetchRequest<Part> = Part.fetchRequest()
+    func loadParts(with request: NSFetchRequest<Part> = Part.fetchRequest()) {
         do {
             itemList =  try context.fetch(request)
         } catch {
             print("context fetch request error \(error.localizedDescription)")
         }
+        
+        tableView.reloadData()
     }
 }
 
+//MARK: Search Bar Methods
+extension PartsListViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        let request : NSFetchRequest<Part> = Part.fetchRequest()
+        
+        request.predicate = NSPredicate(format: "name CONTAINS[cd] %@", searchBar.text!)
+        
+        request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
+        
+        loadParts(with: request)
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchBar.text?.count == 0 {
+            loadParts()
+            
+            DispatchQueue.main.async {
+                searchBar.resignFirstResponder()
+            }
+        }
+    }
+}
