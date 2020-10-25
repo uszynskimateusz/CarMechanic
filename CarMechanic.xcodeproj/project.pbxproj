@@ -15,6 +15,7 @@
 		69119BB4253B128A00AB758C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 69119BB2253B128A00AB758C /* LaunchScreen.storyboard */; };
 		69119BBF253B128A00AB758C /* CarMechanicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69119BBE253B128A00AB758C /* CarMechanicTests.swift */; };
 		69119BCA253B128A00AB758C /* CarMechanicUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69119BC9253B128A00AB758C /* CarMechanicUITests.swift */; };
+		6918EAB2254429D300CB0CC9 /* CarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6918EAB1254429D300CB0CC9 /* CarViewController.swift */; };
 		69E2E027253CD80A008E3494 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 69E2E025253CD80A008E3494 /* DataModel.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
@@ -50,6 +51,7 @@
 		69119BC5253B128A00AB758C /* CarMechanicUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CarMechanicUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		69119BC9253B128A00AB758C /* CarMechanicUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarMechanicUITests.swift; sourceTree = "<group>"; };
 		69119BCB253B128A00AB758C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6918EAB1254429D300CB0CC9 /* CarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarViewController.swift; sourceTree = "<group>"; };
 		69E2E026253CD80A008E3494 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -142,6 +144,7 @@
 		69119BDB253B453700AB758C /* Controlles */ = {
 			isa = PBXGroup;
 			children = (
+				6918EAB1254429D300CB0CC9 /* CarViewController.swift */,
 				69119BAB253B128700AB758C /* PartsListViewController.swift */,
 			);
 			path = Controlles;
@@ -285,6 +288,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6918EAB2254429D300CB0CC9 /* CarViewController.swift in Sources */,
 				69E2E027253CD80A008E3494 /* DataModel.xcdatamodeld in Sources */,
 				69119BAC253B128700AB758C /* PartsListViewController.swift in Sources */,
 				69119BA8253B128700AB758C /* AppDelegate.swift in Sources */,

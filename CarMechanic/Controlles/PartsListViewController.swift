@@ -13,6 +13,12 @@ class PartsListViewController: UITableViewController {
     var itemList = [Part]()
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
+    var selectedCar: Car? {
+        didSet{
+            loadParts()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -58,6 +64,7 @@ class PartsListViewController: UITableViewController {
 
             let newPart = Part(context: self.context)
             newPart.name = textField.text!
+            newPart.parentCar = self.selectedCar
             
             self.itemList.append(newPart)
             
@@ -86,7 +93,16 @@ class PartsListViewController: UITableViewController {
         self.tableView.reloadData()
     }
     
-    func loadParts(with request: NSFetchRequest<Part> = Part.fetchRequest()) {
+    func loadParts(with request: NSFetchRequest<Part> = Part.fetchRequest(), predicate: NSPredicate? = nil) {
+        
+        let CarsPredicate = NSPredicate(format: "parentCar.name MATCHES %@", selectedCar!.name!)
+        
+        if let additionalPredicate = predicate {
+            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [CarsPredicate, additionalPredicate])
+        } else {
+            request.predicate = CarsPredicate
+        }
+        
         do {
             itemList =  try context.fetch(request)
         } catch {
@@ -102,11 +118,11 @@ extension PartsListViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         let request : NSFetchRequest<Part> = Part.fetchRequest()
         
-        request.predicate = NSPredicate(format: "name CONTAINS[cd] %@", searchBar.text!)
+        let predicate = NSPredicate(format: "name CONTAINS[cd] %@", searchBar.text!)
         
         request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
         
-        loadParts(with: request)
+        loadParts(with: request, predicate: predicate)
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {

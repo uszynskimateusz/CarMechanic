@@ -8,6 +8,45 @@
     </dependencies>
     <scenes>
         <!--Car Mechanic 🚗-->
+        <scene sceneID="hWe-7T-Yfb">
+            <objects>
+                <tableViewController id="c4x-4M-Nf3" customClass="CarViewController" customModule="CarMechanic" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="2KS-Pt-IOm">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CarItemCell" id="ycr-2K-G0k">
+                                <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ycr-2K-G0k" id="P2k-11-Mpa">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="c4x-4M-Nf3" id="ziv-Ol-OAE"/>
+                            <outlet property="delegate" destination="c4x-4M-Nf3" id="Hxl-RH-uxm"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Car Mechanic 🚗" id="36a-UW-SxO">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="CHH-6A-j7F">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="addButtonPressed:" destination="c4x-4M-Nf3" id="tdW-qB-dCC"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <segue destination="l3s-lD-PgF" kind="show" identifier="goToParts" id="PbS-Fk-NpE"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QcB-kV-Ivi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1448" y="80"/>
+        </scene>
+        <!--Parts 🚗-->
         <scene sceneID="S40-hx-Mfp">
             <objects>
                 <tableViewController id="l3s-lD-PgF" customClass="PartsListViewController" customModule="CarMechanic" customModuleProvider="target" sceneMemberID="viewController">
@@ -38,7 +77,7 @@
                             <outlet property="delegate" destination="l3s-lD-PgF" id="O3S-4H-oNw"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Car Mechanic 🚗" id="4Df-Ed-Vjc">
+                    <navigationItem key="navigationItem" title="Parts 🚗" id="4Df-Ed-Vjc">
                         <barButtonItem key="rightBarButtonItem" image="plus" catalog="system" id="mDU-a5-pMv">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
@@ -49,7 +88,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="shL-xD-ezN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1684.057971014493" y="79.6875"/>
+            <point key="canvasLocation" x="2403" y="80"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="baf-iD-peh">
@@ -66,12 +105,12 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="l3s-lD-PgF" kind="relationship" relationship="rootViewController" id="kga-Za-CTZ"/>
+                        <segue destination="c4x-4M-Nf3" kind="relationship" relationship="rootViewController" id="XLO-tz-FUd"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lxu-bs-Pl8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="773.91304347826087" y="79.6875"/>
+            <point key="canvasLocation" x="545" y="80"/>
         </scene>
     </scenes>
     <resources>
