@@ -48,9 +48,17 @@ class PartsListViewController: UITableViewController {
     //MARK: TableView Delegate Methods
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-//        let item = doParts[indexPath.row]
-//        item.done = !item.done
-//        saveParts()
+        if let part = doParts?[indexPath.row] {
+            do {
+                try realm.write {
+                    part.done = !part.done
+                }
+            } catch {
+                print("Error with updating, \(error.localizedDescription)")
+            }
+        }
+        
+        self.tableView.reloadData()
         
         tableView.deselectRow(at: indexPath, animated: true)
     }
