@@ -11,14 +11,12 @@ import RealmSwift
 class CarViewController: UITableViewController {
     let realm = try! Realm()
     
-    var cars = [Car]()
-    
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext 
+    var cars: Results<Car>?
      
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //loadCars()
+        loadCars()
     }
 
     //MARK: Add new car
@@ -32,8 +30,6 @@ class CarViewController: UITableViewController {
             let newCar = Car()
             newCar.name = textField.text!
             
-            self.cars.append(newCar)
-            
             self.saveCars(car: newCar)
         }
         
@@ -46,19 +42,17 @@ class CarViewController: UITableViewController {
         alert.addAction(action)
         
         present(alert, animated: true, completion: nil)
-        
-        
     }
     
     //MARK: TableView Datasource Methods
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return cars.count
+        return cars?.count ?? 1
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CarItemCell", for: indexPath)
         
-        cell.textLabel?.text = cars[indexPath.row].name
+        cell.textLabel?.text = cars?[indexPath.row].name ?? "Brak samochodów"
         
         return cell
     }
@@ -73,7 +67,7 @@ class CarViewController: UITableViewController {
         let destiantionVC = segue.destination as! PartsListViewController
         
         if let indexPath = tableView.indexPathForSelectedRow {
-            destiantionVC.selectedCar = cars[indexPath.row]
+            destiantionVC.selectedCar = cars?[indexPath.row]
         }
     }
     
@@ -90,13 +84,10 @@ class CarViewController: UITableViewController {
         self.tableView.reloadData()
     }
     
-//    func loadCars(with request: NSFetchRequest<Car> = Car.fetchRequest()) {
-//        do {
-//            cars =  try context.fetch(request)
-//        } catch {
-//            print("context fetch request error \(error.localizedDescription)")
-//        }
-//        
-//        tableView.reloadData()
-//  }
+    func loadCars() {
+
+        cars = realm.objects(Car.self)
+        
+        tableView.reloadData()
+  }
 }

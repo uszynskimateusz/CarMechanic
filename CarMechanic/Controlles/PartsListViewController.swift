@@ -6,16 +6,16 @@
 //
 
 import UIKit
-import CoreData
+import RealmSwift
 
 class PartsListViewController: UITableViewController {
 
-    var itemList = [Part]()
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    var doParts: Results<Part>?
+    let realm = try! Realm()
     
     var selectedCar: Car? {
         didSet{
-            //loadParts()
+            loadParts()
         }
     }
     
@@ -29,16 +29,18 @@ class PartsListViewController: UITableViewController {
     //MARK: TableView Datasource Methods
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return itemList.count
+        return doParts?.count ?? 1
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PartItemCell", for: indexPath)
         
-        let item = itemList[indexPath.row]
-        
-        cell.textLabel?.text = item.name
-        cell.accessoryType = item.done ? .checkmark : .none
+        if let item = doParts?[indexPath.row] {
+            cell.textLabel?.text = item.name
+            cell.accessoryType = item.done ? .checkmark : .none
+        } else {
+            cell.textLabel?.text = "No parts"
+        }
         
         return cell
     }
@@ -46,9 +48,9 @@ class PartsListViewController: UITableViewController {
     //MARK: TableView Delegate Methods
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let item = itemList[indexPath.row]
-        item.done = !item.done
-        saveParts()
+//        let item = doParts[indexPath.row]
+//        item.done = !item.done
+//        saveParts()
         
         tableView.deselectRow(at: indexPath, animated: true)
     }
@@ -62,13 +64,20 @@ class PartsListViewController: UITableViewController {
         
         let action = UIAlertAction(title: "Add part", style: .default) { (action) in
 
-//            let newPart = Part(context: self.context)
-//            newPart.name = textField.text!
-//            newPart.parentCar = self.selectedCar
-//
-//            self.itemList.append(newPart)
+            if let currentCar = self.selectedCar {
+                do {
+                    try self.realm.write {
+                        let newPart = Part()
+                        newPart.name = textField.text!
+                        currentCar.parts.append(newPart)
+                    }
+                } catch {
+                    print("error saving parts, \(error.localizedDescription)")
+                }
+            }
             
-            self.saveParts()
+            
+            self.tableView.reloadData()
         }
         
         alert.addTextField { (alertTextField) in
@@ -83,34 +92,12 @@ class PartsListViewController: UITableViewController {
         
     }
     
-    func saveParts() {
-        do {
-            try context.save()
-        } catch {
-            print("error context.save() \(error.localizedDescription)")
-        }
-        
-        self.tableView.reloadData()
+    func loadParts() {
+
+        doParts = selectedCar?.parts.sorted(byKeyPath: "name", ascending: true)
+
+        tableView.reloadData()
     }
-    
-//    func loadParts(with request: NSFetchRequest<Part> = Part.fetchRequest(), predicate: NSPredicate? = nil) {
-//
-//        let CarsPredicate = NSPredicate(format: "parentCar.name MATCHES %@", selectedCar!.name!)
-//
-//        if let additionalPredicate = predicate {
-//            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [CarsPredicate, additionalPredicate])
-//        } else {
-//            request.predicate = CarsPredicate
-//        }
-//
-//        do {
-//            itemList =  try context.fetch(request)
-//        } catch {
-//            print("context fetch request error \(error.localizedDescription)")
-//        }
-//
-//        tableView.reloadData()
-//    }
 }
 
 //MARK: Search Bar Methods
