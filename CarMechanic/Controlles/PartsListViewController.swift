@@ -15,7 +15,7 @@ class PartsListViewController: UITableViewController {
     
     var selectedCar: Car? {
         didSet{
-            loadParts()
+            //loadParts()
         }
     }
     
@@ -23,7 +23,7 @@ class PartsListViewController: UITableViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        loadParts()
+        //loadParts()
     }
     
     //MARK: TableView Datasource Methods
@@ -62,11 +62,11 @@ class PartsListViewController: UITableViewController {
         
         let action = UIAlertAction(title: "Add part", style: .default) { (action) in
 
-            let newPart = Part(context: self.context)
-            newPart.name = textField.text!
-            newPart.parentCar = self.selectedCar
-            
-            self.itemList.append(newPart)
+//            let newPart = Part(context: self.context)
+//            newPart.name = textField.text!
+//            newPart.parentCar = self.selectedCar
+//
+//            self.itemList.append(newPart)
             
             self.saveParts()
         }
@@ -93,45 +93,45 @@ class PartsListViewController: UITableViewController {
         self.tableView.reloadData()
     }
     
-    func loadParts(with request: NSFetchRequest<Part> = Part.fetchRequest(), predicate: NSPredicate? = nil) {
-        
-        let CarsPredicate = NSPredicate(format: "parentCar.name MATCHES %@", selectedCar!.name!)
-        
-        if let additionalPredicate = predicate {
-            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [CarsPredicate, additionalPredicate])
-        } else {
-            request.predicate = CarsPredicate
-        }
-        
-        do {
-            itemList =  try context.fetch(request)
-        } catch {
-            print("context fetch request error \(error.localizedDescription)")
-        }
-        
-        tableView.reloadData()
-    }
+//    func loadParts(with request: NSFetchRequest<Part> = Part.fetchRequest(), predicate: NSPredicate? = nil) {
+//
+//        let CarsPredicate = NSPredicate(format: "parentCar.name MATCHES %@", selectedCar!.name!)
+//
+//        if let additionalPredicate = predicate {
+//            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [CarsPredicate, additionalPredicate])
+//        } else {
+//            request.predicate = CarsPredicate
+//        }
+//
+//        do {
+//            itemList =  try context.fetch(request)
+//        } catch {
+//            print("context fetch request error \(error.localizedDescription)")
+//        }
+//
+//        tableView.reloadData()
+//    }
 }
 
 //MARK: Search Bar Methods
-extension PartsListViewController: UISearchBarDelegate {
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        let request : NSFetchRequest<Part> = Part.fetchRequest()
-        
-        let predicate = NSPredicate(format: "name CONTAINS[cd] %@", searchBar.text!)
-        
-        request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
-        
-        loadParts(with: request, predicate: predicate)
-    }
-    
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if searchBar.text?.count == 0 {
-            loadParts()
-            
-            DispatchQueue.main.async {
-                searchBar.resignFirstResponder()
-            }
-        }
-    }
-}
+//extension PartsListViewController: UISearchBarDelegate {
+//    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+//        let request : NSFetchRequest<Part> = Part.fetchRequest()
+//
+//        let predicate = NSPredicate(format: "name CONTAINS[cd] %@", searchBar.text!)
+//
+//        request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
+//
+//        loadParts(with: request, predicate: predicate)
+//    }
+//
+//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+//        if searchBar.text?.count == 0 {
+//            //loadParts()
+//
+//            DispatchQueue.main.async {
+//                searchBar.resignFirstResponder()
+//            }
+//        }
+//    }
+//}

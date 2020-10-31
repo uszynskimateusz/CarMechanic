@@ -6,9 +6,10 @@
 //
 
 import UIKit
-import CoreData
+import RealmSwift
 
 class CarViewController: UITableViewController {
+    let realm = try! Realm()
     
     var cars = [Car]()
     
@@ -17,7 +18,7 @@ class CarViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        loadCars()
+        //loadCars()
     }
 
     //MARK: Add new car
@@ -28,12 +29,12 @@ class CarViewController: UITableViewController {
         
         let action = UIAlertAction(title: "Add Car", style: .default) { (action) in
 
-            let newCar = Car(context: self.context)
+            let newCar = Car()
             newCar.name = textField.text!
             
             self.cars.append(newCar)
             
-            self.saveCars()
+            self.saveCars(car: newCar)
         }
         
         alert.addTextField { (alertTextField) in
@@ -77,9 +78,11 @@ class CarViewController: UITableViewController {
     }
     
     //MARK: Data Manipulation Methods
-    func saveCars() {
+    func saveCars(car: Car) {
         do {
-            try context.save()
+            try realm.write{
+                realm.add(car)
+            }
         } catch {
             print("error context.save() \(error.localizedDescription)")
         }
@@ -87,13 +90,13 @@ class CarViewController: UITableViewController {
         self.tableView.reloadData()
     }
     
-    func loadCars(with request: NSFetchRequest<Car> = Car.fetchRequest()) {
-        do {
-            cars =  try context.fetch(request)
-        } catch {
-            print("context fetch request error \(error.localizedDescription)")
-        }
-        
-        tableView.reloadData()
-    }
+//    func loadCars(with request: NSFetchRequest<Car> = Car.fetchRequest()) {
+//        do {
+//            cars =  try context.fetch(request)
+//        } catch {
+//            print("context fetch request error \(error.localizedDescription)")
+//        }
+//        
+//        tableView.reloadData()
+//  }
 }

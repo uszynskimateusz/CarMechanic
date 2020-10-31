@@ -18,14 +18,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         print(Realm.Configuration.defaultConfiguration.fileURL!)
         
-        let data = Data()
-        data.name = "Matt"
-        data.age = 21
-        
         do {
         let realm = try Realm()
             try realm.write {
-                realm.add(data)
+                
             }
         } catch {
             print(error.localizedDescription)

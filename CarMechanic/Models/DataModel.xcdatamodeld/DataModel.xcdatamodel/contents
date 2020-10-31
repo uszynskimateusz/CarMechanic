@@ -4,13 +4,13 @@
         <attribute name="name" attributeType="String"/>
         <relationship name="parts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Part" inverseName="parentCar" inverseEntity="Part"/>
     </entity>
-    <entity name="Part" representedClassName=".Part" syncable="YES" codeGenerationType="class">
+    <entity name="Part" representedClassName=".Part" syncable="YES">
         <attribute name="done" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="name" attributeType="String"/>
         <relationship name="parentCar" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Car" inverseName="parts" inverseEntity="Car"/>
     </entity>
     <elements>
-        <element name="Part" positionX="-54" positionY="-9" width="128" height="88"/>
         <element name="Car" positionX="-260.2109375" positionY="-1.7578125" width="128" height="73"/>
+        <element name="Part" positionX="-54" positionY="-9" width="128" height="88"/>
     </elements>
 </model>
