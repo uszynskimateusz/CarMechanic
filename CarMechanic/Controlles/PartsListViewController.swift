@@ -77,6 +77,7 @@ class PartsListViewController: UITableViewController {
                     try self.realm.write {
                         let newPart = Part()
                         newPart.name = textField.text!
+                        newPart.dateCreated = Date()
                         currentCar.parts.append(newPart)
                     }
                 } catch {
@@ -109,24 +110,18 @@ class PartsListViewController: UITableViewController {
 }
 
 //MARK: Search Bar Methods
-//extension PartsListViewController: UISearchBarDelegate {
-//    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-//        let request : NSFetchRequest<Part> = Part.fetchRequest()
-//
-//        let predicate = NSPredicate(format: "name CONTAINS[cd] %@", searchBar.text!)
-//
-//        request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
-//
-//        loadParts(with: request, predicate: predicate)
-//    }
-//
-//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-//        if searchBar.text?.count == 0 {
-//            //loadParts()
-//
-//            DispatchQueue.main.async {
-//                searchBar.resignFirstResponder()
-//            }
-//        }
-//    }
-//}
+extension PartsListViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        doParts = doParts?.filter("name CONTAINS[cd] %@", searchBar.text!).sorted(byKeyPath: "dateCreated", ascending: true)
+    }
+
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchBar.text?.count == 0 {
+            loadParts()
+
+            DispatchQueue.main.async {
+                searchBar.resignFirstResponder()
+            }
+        }
+    }
+}
