@@ -8,7 +8,7 @@
 import UIKit
 import RealmSwift
 
-class PartsListViewController: UITableViewController {
+class PartsListViewController: SwipeTableViewController {
 
     var doParts: Results<Part>?
     let realm = try! Realm()
@@ -23,7 +23,7 @@ class PartsListViewController: UITableViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        //loadParts()
+        tableView.rowHeight = 90
     }
     
     //MARK: TableView Datasource Methods
@@ -33,8 +33,7 @@ class PartsListViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "PartItemCell", for: indexPath)
-        
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
         if let item = doParts?[indexPath.row] {
             cell.textLabel?.text = item.name
             cell.accessoryType = item.done ? .checkmark : .none
@@ -121,6 +120,18 @@ extension PartsListViewController: UISearchBarDelegate {
 
             DispatchQueue.main.async {
                 searchBar.resignFirstResponder()
+            }
+        }
+    }
+    
+    override func updateModel(at indexPath: IndexPath) {
+        if let partForDeletion = self.doParts?[indexPath.row] {
+            do {
+                try self.realm.write {
+                    self.realm.delete(partForDeletion)
+                }
+            } catch {
+                print("error with deletion. \(error.localizedDescription)")
             }
         }
     }

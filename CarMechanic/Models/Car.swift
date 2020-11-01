@@ -10,5 +10,6 @@ import RealmSwift
 
 class Car: Object {
     @objc dynamic var name: String = ""
+    @objc dynamic var colour: String = ""
     let parts = List<Part>()
 }

@@ -7,9 +7,9 @@
 
 import UIKit
 import RealmSwift
-import SwipeCellKit
+import ChameleonFramework
 
-class CarViewController: UITableViewController {
+class CarViewController: SwipeTableViewController {
     let realm = try! Realm()
     
     var cars: Results<Car>?
@@ -19,6 +19,7 @@ class CarViewController: UITableViewController {
         
         tableView.rowHeight = 90
         loadCars()
+        
     }
 
     //MARK: Add new car
@@ -31,6 +32,7 @@ class CarViewController: UITableViewController {
 
             let newCar = Car()
             newCar.name = textField.text!
+            newCar.colour = UIColor.randomFlat().hexValue()
             
             self.saveCars(car: newCar)
         }
@@ -52,11 +54,11 @@ class CarViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CarItemCell", for: indexPath) as! SwipeTableViewCell
-        cell.delegate = self
-        
-        cell.textLabel?.text = cars?[indexPath.row].name ?? "Brak samochodów"
-        
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
+        if let car = cars?[indexPath.row] {
+            cell.textLabel?.text = car.name
+            cell.backgroundColor = UIColor(hexString: car.colour)
+        }
         return cell
     }
     
@@ -93,35 +95,16 @@ class CarViewController: UITableViewController {
         
         tableView.reloadData()
   }
-}
-//MARK: Swipe Cell Delegate Methods
-extension CarViewController: SwipeTableViewCellDelegate {
-    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
-        guard orientation == .right else { return nil }
-
-            let deleteAction = SwipeAction(style: .destructive, title: "Delete") { action, indexPath in
-                // handle action by updating model with deletion
-                if let carForDeletion = self.cars?[indexPath.row] {
-                    do {
-                        try self.realm.write {
-                            self.realm.delete(carForDeletion)
-                        }
-                    } catch {
-                        print("error with deletion. \(error.localizedDescription)")
-                    }
-                }
-            }
-
-            // customize the action appearance
-            deleteAction.image = UIImage(named: "trash-small")
-
-            return [deleteAction]
-    }
     
-    func tableView(_ tableView: UITableView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeOptions {
-        var options = SwipeOptions()
-        options.expansionStyle = .destructive
-        options.transitionStyle = .border
-        return options
+    override func updateModel(at indexPath: IndexPath) {
+        if let carForDeletion = self.cars?[indexPath.row] {
+            do {
+                try self.realm.write {
+                    self.realm.delete(carForDeletion)
+                }
+            } catch {
+                print("error with deletion. \(error.localizedDescription)")
+            }
+        }
     }
 }
