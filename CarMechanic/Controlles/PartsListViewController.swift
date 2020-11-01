@@ -7,9 +7,11 @@
 
 import UIKit
 import RealmSwift
+import ChameleonFramework
 
 class PartsListViewController: SwipeTableViewController {
 
+    @IBOutlet weak var searchBar: UISearchBar!
     var doParts: Results<Part>?
     let realm = try! Realm()
     
@@ -26,6 +28,25 @@ class PartsListViewController: SwipeTableViewController {
         tableView.rowHeight = 90
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        if let colourHex = selectedCar?.colour {
+            title = selectedCar!.name
+            
+            guard let navBar = navigationController?.navigationBar else {
+                fatalError("Navigation controller not exist")}
+            
+            if let navBarColour = UIColor(hexString: colourHex) {
+                navBar.barTintColor = navBarColour
+                navBar.tintColor = ContrastColorOf(navBarColour, returnFlat: true)
+                
+                navBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: ContrastColorOf(navBarColour, returnFlat: true)]
+                
+                searchBar.barTintColor = navBarColour
+            }
+
+        }
+    }
+    
     //MARK: TableView Datasource Methods
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -36,6 +57,13 @@ class PartsListViewController: SwipeTableViewController {
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
         if let item = doParts?[indexPath.row] {
             cell.textLabel?.text = item.name
+            
+            if let colour = UIColor(hexString: selectedCar!.colour)?.darken(byPercentage: CGFloat(indexPath.row)/CGFloat(doParts!.count)) {
+                cell.backgroundColor = colour
+            
+                cell.textLabel?.textColor = ContrastColorOf(colour, returnFlat: true)
+            }
+            
             cell.accessoryType = item.done ? .checkmark : .none
         } else {
             cell.textLabel?.text = "No parts"

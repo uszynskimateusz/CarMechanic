@@ -21,6 +21,14 @@ class CarViewController: SwipeTableViewController {
         loadCars()
         
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        guard let navBar = navigationController?.navigationBar else {
+            fatalError("Navigation controller not exist")}
+
+        navBar.barTintColor = UIColor(hexString: "#FE584E")
+
+    }
 
     //MARK: Add new car
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
@@ -57,7 +65,12 @@ class CarViewController: SwipeTableViewController {
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
         if let car = cars?[indexPath.row] {
             cell.textLabel?.text = car.name
-            cell.backgroundColor = UIColor(hexString: car.colour)
+            
+            guard let carColour =  UIColor(hexString: car.colour) else {
+                fatalError("fatal error in car view controller, do car colour in cellforat")
+            }
+            cell.backgroundColor = carColour
+            cell.textLabel?.textColor = ContrastColorOf(carColour, returnFlat: true)
         }
         return cell
     }
